@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Beadsy design tokens — sampled from the logo
+   (plum wordmark, bubblegum / sun / mint beads, coral heart, cream paper)
+------------------------------------------------------------------- */
+@theme {
+  --color-cream-50: #fffdf8;
+  --color-cream-100: #fdf7ee;
+  --color-cream-200: #f6ebd9;
+  --color-cream-300: #ecdcc2;
+
+  --color-plum-50: #f7f2fa;
+  --color-plum-100: #ede3f4;
+  --color-plum-200: #dccaea;
+  --color-plum-300: #c5a9db;
+  --color-plum-400: #ae8bc7;
+  --color-plum-500: #9b79ae;
+  --color-plum-600: #84609a;
+  --color-plum-700: #6b4a82;
+  --color-plum-800: #523765;
+  --color-plum-900: #3a2749;
+
+  --color-bubblegum-100: #fde4ec;
+  --color-bubblegum-300: #f9b1c9;
+  --color-bubblegum-500: #f58fb0;
+  --color-bubblegum-600: #e8688f;
+  --color-bubblegum-700: #c4456f;
+
+  --color-sun-100: #fef3cd;
+  --color-sun-300: #fbe08a;
+  --color-sun-500: #f8d26b;
+  --color-sun-700: #8a6508;
+
+  --color-mint-100: #e1f2e2;
+  --color-mint-300: #bfe0c0;
+  --color-mint-500: #98c99a;
+  --color-mint-700: #3f7a43;
+
+  --color-coral-500: #e8837f;
+  --color-coral-700: #b8433e;
+
+  --color-muted: #6e5f7a;
+
+  --radius-bead: 1.25rem;
+  --shadow-soft: 0 8px 28px -10px rgb(107 74 130 / 0.28);
+  --shadow-pop: 0 14px 40px -12px rgb(107 74 130 / 0.38);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.5s ease-out both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+@theme inline {
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cream-100 font-sans text-plum-900 antialiased;
+    min-width: 320px;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-plum-900;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-bubblegum-300); color: var(--color-plum-900); }
+
+  :focus-visible {
+    outline: 3px solid var(--color-plum-600);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  button, [role="button"], a, summary { -webkit-tap-highlight-color: transparent; }
+  img, svg { max-width: 100%; }
+
+  dialog { color: inherit; }
+  dialog::backdrop {
+    background: rgb(58 39 73 / 0.5);
+    backdrop-filter: blur(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------ components */
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold
+      transition duration-200 select-none disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    @apply bg-plum-700 text-white shadow-soft hover:bg-plum-800 hover:shadow-pop;
+  }
+  .btn-pink {
+    @apply bg-bubblegum-600 text-white shadow-soft hover:bg-bubblegum-700 hover:shadow-pop;
+  }
+  .btn-secondary {
+    @apply border-2 border-plum-700 bg-transparent text-plum-700 hover:bg-plum-700 hover:text-white;
+  }
+  .btn-soft {
+    @apply bg-plum-100 text-plum-800 hover:bg-plum-200;
+  }
+  .btn-ghost {
+    @apply text-plum-800 hover:bg-plum-100;
+  }
+  .btn-danger {
+    @apply bg-coral-700 text-white hover:bg-red-800;
+  }
+  .btn-sm { @apply min-h-9 px-4 py-1.5 text-xs; }
+  .btn-lg { @apply min-h-12 px-8 py-3 text-base; }
+
+  .icon-btn {
+    @apply inline-flex size-11 items-center justify-center rounded-full text-plum-800 transition hover:bg-plum-100;
+  }
+
+  .card {
+    @apply rounded-bead border border-plum-100 bg-white shadow-soft;
+  }
+
+  .input {
+    @apply block min-h-11 w-full rounded-xl border-2 border-plum-200 bg-white px-4 py-2 text-base text-plum-900
+      placeholder:text-plum-400 transition focus:border-plum-600 focus:outline-none focus:ring-4 focus:ring-plum-200/60
+      aria-[invalid=true]:border-coral-700 disabled:bg-plum-50;
+  }
+  .label { @apply mb-1.5 block text-sm font-semibold text-plum-800; }
+  .field-error { @apply mt-1.5 text-sm font-medium text-coral-700; }
+  .hint { @apply mt-1 text-xs text-muted; }
+
+  .chip {
+    @apply inline-flex min-h-9 items-center gap-1.5 rounded-full border-2 border-plum-200 bg-white px-3.5 py-1 text-sm font-medium
+      text-plum-800 transition hover:border-plum-500 aria-pressed:border-plum-700 aria-pressed:bg-plum-700 aria-pressed:text-white;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wide;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-plum-100) 25%, var(--color-plum-50) 50%, var(--color-plum-100) 75%);
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-xl;
+  }
+
+  .section-title { @apply text-3xl font-semibold sm:text-4xl; }
+  .eyebrow { @apply text-xs font-bold tracking-[0.18em] text-plum-600 uppercase; }
+
+  .prose-beadsy p { @apply mb-4 leading-relaxed text-plum-800; }
+  .prose-beadsy h2 { @apply mt-8 mb-3 text-2xl font-semibold; }
+  .prose-beadsy ul { @apply mb-4 list-disc space-y-1.5 pl-6 text-plum-800; }
+  .prose-beadsy a { @apply font-semibold text-plum-700 underline underline-offset-4; }
+}
+
+/* sr-only helper already ships with Tailwind; skip-link styling */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--color-plum-800);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 1rem; }
